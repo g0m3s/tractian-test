@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
+import { useTranslation } from "next-i18next";
 import { accountState } from "~/atoms/account";
-import { useTranslation } from "react-i18next";
 import { Grid, User, Settings } from "react-feather";
 import tractionLogo from "~/assets/logos/tractianLogo.png";
 import { Box, Divider, HStack, Image, Text, VStack } from "@chakra-ui/react";
 
 export const SideMenu: React.FC = () => {
   const { push } = useRouter();
-  const [account, _] = useRecoilState(accountState);
   const { t } = useTranslation("common");
+  const [account, _] = useRecoilState(accountState);
 
   const SIDE_MENU_ITEMS = [
     {
@@ -33,23 +33,17 @@ export const SideMenu: React.FC = () => {
   return (
     <>
       <VStack height={"100%"} justifyContent={"space-between"}>
-        <VStack
-          pt={1}
-          px={5}
-          w="270px"
-          height={"100%"}
-          borderRadius={10}
-        >
+        <VStack pt={1} px={5} w="270px" height={"100%"} borderRadius={10}>
           <img
             alt="Tractian logo"
             src={tractionLogo.src}
             style={{ width: "120px", marginBottom: "10px" }}
           />
           <Image
-            boxSize="100px"
             alt=""
+            boxSize="100px"
             borderRadius="full"
-            src="https://bit.ly/dan-abramov"
+            src="https://xsgames.co/randomusers/avatar.php?g=female"
           />
           <Text color="#FFF" fontWeight={"semibold"}>
             {account?.name}

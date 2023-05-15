@@ -4,9 +4,9 @@ const _Index: NextPage = () => null;
 
 export const getServerSideProps: GetServerSideProps = async () => ({
   redirect: {
-    destination: '/dashboard',
-    permanent: true,
     locale: true,
+    permanent: true,
+    destination: '/login',
   },
 });
 

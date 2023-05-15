@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { AppLayout } from "~/components";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { Divider, HStack, Image, Text, VStack } from "@chakra-ui/react";
 
 export const UsersRoute: NextPage = () => {

@@ -1,11 +1,12 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { SideMenu } from "../SideMenu";
-import { Box, Divider, HStack, Select, Stack, Text } from "@chakra-ui/react";
 import { IUnit } from "~/types/api";
+import { SideMenu } from "../SideMenu";
 import { useRecoilState } from "recoil";
 import { unitState } from "~/atoms/unit";
+import { useTranslation } from "next-i18next";
 import { accountState } from "~/atoms/account";
-import { useTranslation } from "react-i18next";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { Box, Divider, HStack, Select, Stack, Text } from "@chakra-ui/react";
+import Head from "next/head";
 
 interface AppLayoutProps {
   isLogin?: boolean;
@@ -51,56 +52,61 @@ export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
   }, []);
 
   return (
-    <Stack
-      p={10}
-      height={"100vh"}
-      overflow={"hidden"}
-      bg="rgba(255, 255, 255, 0.87)"
-    >
-      <HStack
+    <>
+      <Head>
+        <title>Tractian | Dashboard</title>
+      </Head>
+      <Stack
         p={10}
-        pt={"100px"}
-        bg="#242424"
-        height={"100%"}
-        borderRadius={20}
-        position={"relative"}
-        alignItems={"flex-start"}
-        boxShadow={"0px 0px 10px rgba(0,0,0,.5)"}
+        height={"100vh"}
+        overflow={"hidden"}
+        bg="rgba(255, 255, 255, 0.87)"
       >
-        {!isLogin && <SideMenu />}
-        <Stack
-          w={"100%"}
-          h={"100%"}
-          overflowY={"scroll"}
-          sx={{
-            "*::-webkit-scrollbar": {
-              width: "5px",
-            },
-            "*::-webkit-scrollbar-track": {
-              backgroundColor: "transparent",
-            },
-            "*::-webkit-scrollbar-thumb": {
-              borderRadius: 2,
-              backgroundColor: "#242424",
-            },
-          }}
+        <HStack
+          p={10}
+          pt={"100px"}
+          bg="#242424"
+          height={"100%"}
+          borderRadius={20}
+          position={"relative"}
+          alignItems={"flex-start"}
+          boxShadow={"0px 0px 10px rgba(0,0,0,.5)"}
         >
-          {children}
-        </Stack>
-        <HStack top={10} right={10} hidden={isLogin} position={"absolute"}>
-          <Box>
-            <Text color="#FFF">
-              {t("unit")}: {unit?.name}
-            </Text>
-          </Box>
-          <Divider orientation="vertical" />
-          <Select w={"250px"} color="#FFF" border={"none"} cursor={"pointer"}>
-            {company?.map((item: any) => (
-              <option value={item.value}>{item.name}</option>
-            ))}
-          </Select>
+          {!isLogin && <SideMenu />}
+          <Stack
+            w={"100%"}
+            h={"100%"}
+            overflowY={"scroll"}
+            sx={{
+              "*::-webkit-scrollbar": {
+                width: "5px",
+              },
+              "*::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+              },
+              "*::-webkit-scrollbar-thumb": {
+                borderRadius: 2,
+                backgroundColor: "#242424",
+              },
+            }}
+          >
+            {children}
+          </Stack>
+          <HStack top={10} right={10} hidden={isLogin} position={"absolute"}>
+            <Box>
+              <Text color="#FFF">
+                {t("unit")}: {unit?.name}
+              </Text>
+            </Box>
+            <Divider orientation="vertical" />
+            <Select w={"250px"} color="#FFF" border={"none"} cursor={"pointer"}>
+              {company?.map((item: any) => (
+                <option value={item.value}>{item.name}</option>
+              ))}
+            </Select>
+          </HStack>
         </HStack>
-      </HStack>
-    </Stack>
+      </Stack>
+    </>
   );
 };

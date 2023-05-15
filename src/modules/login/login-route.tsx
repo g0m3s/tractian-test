@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { AppLayout } from "~/components";
 import { IAccount } from "~/types/api";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { accountState } from "~/atoms/account";
 import tractionLogo from "~/assets/logos/tractianLogo.png";
 
@@ -26,6 +26,11 @@ export const LoginRoute: NextPage = () => {
   const [availableUsers, setAvailableUsers] = useState<IAccount[]>([]);
 
   useEffect(() => {
+    const localUser = localStorage.getItem("t_user");
+    if (localUser) {
+      setAccountInfos(JSON.parse(localUser) as IAccount);
+      return
+    }
     fetch("https://my-json-server.typicode.com/tractian/fake-api/users")
       .then((res) => res.json())
       .then((res: IAccount[]) => {
@@ -37,6 +42,7 @@ export const LoginRoute: NextPage = () => {
     const selectedAccount = availableUsers.find((user) => user.email === email);
     if (!!selectedAccount) {
       setAccountInfos(selectedAccount);
+      localStorage.setItem("t_user", JSON.stringify(selectedAccount));
       push("/dashboard");
       return;
     }

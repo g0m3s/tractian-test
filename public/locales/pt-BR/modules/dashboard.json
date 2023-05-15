@@ -1,0 +1,11 @@
+{
+  "toDo": "To do",
+  "metrics": "Métricas",
+  "completed": "Finalizadas",
+  "inProgress": "Em andamento",
+  "health_score": "Saúde do ativo",
+  "more_details": "Mais detalhes",
+  "workorders": "Ordens de serviço",
+  "unit_assets": "Ativos da unidade",
+  "asset_detail": "Detalhes do ativo"
+}

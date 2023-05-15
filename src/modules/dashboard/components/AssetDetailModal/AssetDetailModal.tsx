@@ -20,9 +20,10 @@ import HighchartsReact from "highcharts-react-official";
 
 import { RightSideModal } from "~/components";
 import { AssetStatusBadge } from "../AssetStatusBadge";
+import { IAsset } from "~/types/api";
 
 interface AssetsDetailModalProps {
-  asset?: Asset;
+  asset?: IAsset;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -32,40 +33,7 @@ export const AssetDetailModal: React.FC<AssetsDetailModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { t } = useTranslation(["modules/reports", "common"]);
-
-  // {
-  //   "assignedUserIds": [
-  //     1,
-  //     2,
-  //     3
-  //   ],
-  //   "companyId": 1,
-  //   "healthHistory": [
-  //     {
-  //       "status": "inOperation",
-  //       "timestamp": "2022-12-01T00:00:00.000Z"
-  //     },
-  //     {
-  //       "status": "inDowntime",
-  //       "timestamp": "2022-12-08T00:00:00.000Z"
-  //     },
-  //     {
-  //       "status": "inOperation",
-  //       "timestamp": "2022-12-15T00:00:00.000Z"
-  //     },
-  //     {
-  //       "status": "inAlert",
-  //       "timestamp": "2022-12-22T00:00:00.000Z"
-  //     },
-  //     {
-  //       "status": "unplannedStop",
-  //       "timestamp": "2022-12-29T00:00:00.000Z"
-  //     }
-  //   ],
-  //   "healthscore": 70,
-  //   "id": 1,
-  // },
+  const { t } = useTranslation(["modules/dashboard", "common"]);
 
   return (
     <>

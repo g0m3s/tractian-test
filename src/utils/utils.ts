@@ -10,7 +10,7 @@ export const generateOptions = (
 
   return {
     title: {
-      text: `${title}: ${value}`,
+      text: `${title}: ${value}%`,
       style: {
         fontSize: "12px",
       },

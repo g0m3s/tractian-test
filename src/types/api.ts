@@ -11,9 +11,22 @@ export interface IUnit {
   companyId: number;
 }
 
-export type AssetStatus = "inOperation" | "inDowntime" | "inAlert" | "unplannedStop";
+export interface IUser {
+  companyId: number;
+  email: string;
+  id: number;
+  name: string;
+  unitId: number;
+}
+
+export type AssetStatus =
+  | "inOperation"
+  | "inDowntime"
+  | "inAlert"
+  | "unplannedStop";
 
 export interface IAsset {
+  assetId: number;
   assignedUserIds: number[];
   companyId: number;
   healthHistory: Array<{
@@ -36,4 +49,33 @@ export interface IAsset {
   };
   status: AssetStatus;
   unitId: number;
+}
+
+type WorkOrderStatus = "todo" | "completed" | "in progress";
+
+export interface IWorkOrder {
+  assetId: number;
+  assignedUserIds: number[];
+  checklist: Array<{
+    task: string;
+    completed: boolean;
+  }>;
+  description: string;
+  id: number;
+  priority: "high";
+  status: WorkOrderStatus;
+  title: string;
+}
+
+export interface ICompany {
+  id: string;
+  name: string;
+}
+
+export interface FullReturn {
+  users: IUser[];
+  units: IUnit[];
+  assets: IAsset[];
+  companies: ICompany[];
+  workorders: IWorkOrder[];
 }

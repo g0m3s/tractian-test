@@ -1,1 +1,7 @@
-{}
+{
+  "unit": "Unit",
+  "users": "Users",
+  "settings": "Settings",
+  "show_more": "Show more",
+  "dashboard": "Dashboard"
+}

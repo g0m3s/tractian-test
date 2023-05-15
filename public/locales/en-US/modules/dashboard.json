@@ -1,0 +1,11 @@
+{
+  "toDo": "To do",
+  "metrics": "Metrics",
+  "completed": "Completed",
+  "inProgress": "In Progress",
+  "workorders": "Work orders",
+  "unit_assets": "Unity assets",
+  "health_score": "Health score",
+  "asset_detail": "Asset detail",
+  "more_details": "More details"
+}
