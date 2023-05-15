@@ -5,23 +5,28 @@ export interface AssetStatusBadgeProps {
   children: React.ReactNode;
   status?: AssetStatus;
 }
+
+export const generateStatusColor = (status?: AssetStatus) => {
+  switch (status) {
+    case "inAlert":
+      return "orange";
+    case "inDowntime":
+      return "red";
+    case "inOperation":
+      return "green";
+    case "unplannedStop":
+      return "red";
+    default:
+      return "grey";
+  }
+};
+
 export const AssetStatusBadge: React.FC<AssetStatusBadgeProps> = ({
   status,
   children,
 }) => {
   const bgColor = useMemo(() => {
-    switch (status) {
-      case "inAlert":
-        return "orange";
-      case "inDowntime":
-        return "red";
-      case "inOperation":
-        return "green";
-      case "unplannedStop":
-        return "red";
-      default:
-        return "grey";
-    }
+    return generateStatusColor(status);
   }, [status]);
 
   return (

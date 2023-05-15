@@ -1,3 +1,5 @@
+import { AssetStatusBadgeProps } from "~/modules/dashboard/components";
+
 interface HealthHistoryEntry {
   status: 'inOperation' | 'inDowntime' | 'inAlert' | 'unplannedStop';
   timestamp: string;
@@ -10,10 +12,10 @@ interface Metrics {
 }
 
 interface Specifications {
+  rpm: number;
+  power: number;
   maxTemp: number;
 }
-
-type AssetStatus = 'inOperation' | 'inDowntime' | 'inAlert' | 'unplannedStop'
 
 interface Asset {
   id: number;
@@ -25,7 +27,7 @@ interface Asset {
   companyId: number;
   sensors: string[];
   healthscore: number;
-  status: AssetStatus;
+  status: AssetStatusBadgeProps;
   assignedUserIds: number[];
   specifications: Specifications;
   healthHistory: HealthHistoryEntry[];

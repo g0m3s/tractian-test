@@ -1,4 +1,6 @@
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { accountState } from "~/atoms/account";
 import { useTranslation } from "react-i18next";
 import { Grid, User, Settings } from "react-feather";
 import tractionLogo from "~/assets/logos/tractianLogo.png";
@@ -6,6 +8,7 @@ import { Box, Divider, HStack, Image, Text, VStack } from "@chakra-ui/react";
 
 export const SideMenu: React.FC = () => {
   const { push } = useRouter();
+  const [account, _] = useRecoilState(accountState);
   const { t } = useTranslation("common");
 
   const SIDE_MENU_ITEMS = [
@@ -36,7 +39,6 @@ export const SideMenu: React.FC = () => {
           w="270px"
           height={"100%"}
           borderRadius={10}
-          // border="1px solid #1677ff"
         >
           <img
             alt="Tractian logo"
@@ -50,7 +52,7 @@ export const SideMenu: React.FC = () => {
             src="https://bit.ly/dan-abramov"
           />
           <Text color="#FFF" fontWeight={"semibold"}>
-            Gabriel Gomes
+            {account?.name}
           </Text>
           <VStack w={"100%"} pt={10}>
             {SIDE_MENU_ITEMS.map((item) => (

@@ -1,25 +1,53 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { SideMenu } from "../SideMenu";
-import { HStack, Select, Stack } from "@chakra-ui/react";
+import { Box, Divider, HStack, Select, Stack, Text } from "@chakra-ui/react";
+import { IUnit } from "~/types/api";
+import { useRecoilState } from "recoil";
+import { unitState } from "~/atoms/unit";
+import { accountState } from "~/atoms/account";
+import { useTranslation } from "react-i18next";
 
-export const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
+interface AppLayoutProps {
+  isLogin?: boolean;
+}
+
+export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
+  children,
+  isLogin,
+}) => {
+  const { t } = useTranslation("common");
   const [company, setCompany] = useState<any>();
+  const [account] = useRecoilState(accountState);
+  const [unit, setUnit] = useRecoilState(unitState);
 
   useEffect(() => {
-    fetch("https://my-json-server.typicode.com/tractian/fake-api/companies")
-      .then((res) => res.json())
-      .then((res) => {
-        const companiesOptions: any = [];
+    if (!isLogin) {
+      fetch("https://my-json-server.typicode.com/tractian/fake-api/companies")
+        .then((res) => res.json())
+        .then((res) => {
+          const companiesOptions: any = [];
 
-        res.map((item: any) =>
-          companiesOptions.push({
-            value: item.id,
-            name: item.name,
-          })
-        );
+          res.map((item: any) =>
+            companiesOptions.push({
+              value: item.id,
+              name: item.name,
+            })
+          );
 
-        setCompany(companiesOptions);
-      });
+          setCompany(companiesOptions);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLogin) {
+      fetch("https://my-json-server.typicode.com/tractian/fake-api/units")
+        .then((res) => res.json())
+        .then((res: IUnit[]) => {
+          const unit = res.find((item) => item.id === account?.unitId);
+          unit && setUnit(unit);
+        });
+    }
   }, []);
 
   return (
@@ -39,26 +67,39 @@ export const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
         alignItems={"flex-start"}
         boxShadow={"0px 0px 10px rgba(0,0,0,.5)"}
       >
-        <SideMenu />
-        <Stack height={"100%"} overflowY={"scroll"}>
+        {!isLogin && <SideMenu />}
+        <Stack
+          w={"100%"}
+          h={"100%"}
+          overflowY={"scroll"}
+          sx={{
+            "*::-webkit-scrollbar": {
+              width: "5px",
+            },
+            "*::-webkit-scrollbar-track": {
+              backgroundColor: "transparent",
+            },
+            "*::-webkit-scrollbar-thumb": {
+              borderRadius: 2,
+              backgroundColor: "#242424",
+            },
+          }}
+        >
           {children}
         </Stack>
-        <Stack
-          top={10}
-          right={10}
-          position={"absolute"}
-          alignItems={"flex-end"}
-        >
-          <Select
-            w={"250px"}
-            color="#FFF"
-            border={"1px solid rgba(255,255,255,.1)"}
-          >
+        <HStack top={10} right={10} hidden={isLogin} position={"absolute"}>
+          <Box>
+            <Text color="#FFF">
+              {t("unit")}: {unit?.name}
+            </Text>
+          </Box>
+          <Divider orientation="vertical" />
+          <Select w={"250px"} color="#FFF" border={"none"} cursor={"pointer"}>
             {company?.map((item: any) => (
               <option value={item.value}>{item.name}</option>
             ))}
           </Select>
-        </Stack>
+        </HStack>
       </HStack>
     </Stack>
   );
