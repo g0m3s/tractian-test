@@ -42,16 +42,19 @@ export const WorkOrders: React.FC<WorkOrdersProps> = ({
         return {
           title: t("toDo"),
           bg: "rgba(255,255,255,.8)",
+          // bg: "rgba(255,255,255,.8)",
         };
       case "inProgress":
         return {
           title: t("inProgress"),
-          bg: "rgba(255,255,0,.8)",
+          bg: "orange",
+          // bg: "rgba(255,255,0,.8)",
         };
       case "completed":
         return {
           title: t("completed"),
-          bg: "rgba(50,205,50, .8)",
+          bg: "green",
+          // bg: "rgba(50,205,50, .8)",
         };
 
       default:
@@ -77,13 +80,13 @@ export const WorkOrders: React.FC<WorkOrdersProps> = ({
             onOpen();
           }}
         >
-          <Text fontSize={"xl"} fontWeight={"bold"}>
+          <Text color='#FFF' fontSize={"xl"} fontWeight={"bold"}>
             {task.title}
           </Text>
           <VStack w="100%">
             {task.checklist.map((checklistItem) => (
               <HStack w={"100%"} alignItems={"flex-start"}>
-                <Checkbox isChecked={checklistItem.completed}>
+                <Checkbox color='#FFF' isChecked={checklistItem.completed}>
                   {checklistItem.task}
                 </Checkbox>
               </HStack>
@@ -118,24 +121,21 @@ export const WorkOrders: React.FC<WorkOrdersProps> = ({
             opacity={0.5}
             hidden={!!activeCardIds.find((item) => item === task.id)}
           >
-            <Text fontSize={"sm"}>{t("common:show_more")}</Text>
+            <Text color='#FFF' fontSize={"sm"}>{t("common:show_more")}</Text>
             <Maximize2 size={12} />
           </HStack>
         </VStack>
       ))}
       <Button onClick={() => onOpenOrder()} w="100%">
         <Plus />
-        <Text>{t("add_task")}</Text>
+        <Text >{t("add_task")}</Text>
       </Button>
       <WorkOrdersDetailModal
         isOpen={isOpen}
         onClose={onClose}
         workOrder={selectedOrder}
       />
-      <CreateWorkOrderModal
-        onClose={onCloseOrder}
-        isOpen={newOrderIsOpen}
-      />
+      <CreateWorkOrderModal onClose={onCloseOrder} isOpen={newOrderIsOpen} />
     </VStack>
   );
 };

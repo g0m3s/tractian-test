@@ -1,23 +1,23 @@
 import {
-  Grid,
   Text,
   Image,
   HStack,
   VStack,
   GridItem,
+  SimpleGrid,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { useMemo, useRef } from "react";
 import { IAsset } from "~/types/api";
+import { useCallback, useMemo, useRef } from "react";
+import { useRecoilState } from "recoil";
 import * as Highcharts from "highcharts";
 import { Maximize2 } from "react-feather";
+import { unitsState } from "~/atoms/units";
+import { accountState } from "~/atoms/account";
 import { useTranslation } from "react-i18next";
 import { generateOptions } from "~/utils/utils";
 import { AssetStatusBadge } from "../AssetStatusBadge";
 import HighchartsReact from "highcharts-react-official";
-import { accountState } from "~/atoms/account";
-import { useRecoilState } from "recoil";
-import { unitsState } from "~/atoms/units";
 
 interface AssetsListProps {
   assets?: IAsset[] | null;
@@ -26,13 +26,17 @@ interface AssetsListProps {
 
 export const AssetsList: React.FC<AssetsListProps> = (props) => {
   const { assets, handleSelectedAsset } = props;
+  const [units] = useRecoilState(unitsState);
+  const [account] = useRecoilState(accountState);
   const { t } = useTranslation("modules/dashboard");
+  const columns = useBreakpointValue({ base: 1, md: 3 });
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   const isMobile = useBreakpointValue({ base: true, md: false, lg: false });
-  const [account] = useRecoilState(accountState);
-  const [units] = useRecoilState(unitsState);
 
-  const userUnit = useMemo(() => units?.find(({ id }) => account?.unitId), []);
+  const userUnit = useCallback(
+    (unitId: number) => !!units?.find(({ id }) => id === unitId),
+    [units]
+  );
 
   return (
     <>
@@ -47,16 +51,7 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
         {t("assets_list")}
       </Text>
 
-      <Grid
-        gap={5}
-        w={"100%"}
-        h={"100%"}
-        templateColumns={{
-          base: "repeat(1, 1fr)",
-          md: "repeat(3, 1fr)",
-          lg: "repeat(3, 1fr)",
-        }}
-      >
+      <SimpleGrid w="100%" columns={columns} gap={5}>
         {assets?.map((item) => (
           <GridItem
             w="100%"
@@ -100,8 +95,10 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
                 />
               </HStack>
 
-              <HStack pt={1} hidden={item.unitId === userUnit?.id}>
-                <Text fontWeight={'semibold'} fontSize={'sm'} color="red">{t('outsider_asset')}</Text>
+              <HStack opacity={0.8} pt={1} hidden={userUnit(item.unitId)}>
+                <Text fontWeight={"semibold"} fontSize={"sm"} color="red">
+                  {t("outsider_asset")}
+                </Text>
               </HStack>
 
               <HStack pt={3} justifyContent={"space-between"} w="100%">
@@ -114,7 +111,7 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
             </VStack>
           </GridItem>
         ))}
-      </Grid>
+      </SimpleGrid>
     </>
   );
 };
