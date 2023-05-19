@@ -1,38 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Introdução
 
-## Getting Started
+Conforme alinhado, o time de desenvolvimento do React não indica mais a criação de aplicações usando CRA e, por isso, o projeto foi desenvolvido em Next.js. A biblioteca utilizada para estilização foi a Chakra UI.
 
-First, run the development server:
+A demonstração do projeto está disponível aqui. O deploy foi feito utilizando os serviços da Vercel, que também está hospedando o site no momento.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Features adicionais
+- Seguindo a linha de expansão da Tractian, um projeto internacionalizado sem dúvidas é crucial. Por isso, este teste já conta com 2 idiomas (português e inglês). Para alternar entre os modos, basta utilizar o switch que fica no menu lateral à esquerda.
+- Imaginando que em um cenário de produção essa aplicação seria utilizada em uma escala diurna e noturna, adicionei também suporte a um modo escuro, proporcionando mais conforto para quem viesse a utilizar essa plataforma em diferentes horários e iluminações.
+- É possível alterar o status de uma tarefa.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Melhorias
+Segue uma lista de recursos que eu gostaria de ter feito ou que enxergo como interessantes, imaginando um ambiente de produção:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Melhorias de performance no manuseio das estruturas de arrays.
+- Melhorias gerais na interface do usuário (UI).
+- Maior responsividade para dispositivos como tablets.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Como rodar o projeto
+Você pode clonar o projeto e rodá-lo localmente seguindo os passos abaixo:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- ```git clone https://github.com/g0m3s/tractian-test.git``` para clonar o projeto.
+- ```yarn``` para instalar as dependências do projeto.
+- ```yarn dev``` para iniciar o servidor local.
