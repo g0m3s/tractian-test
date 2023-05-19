@@ -16,7 +16,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-const PROJECT_URL = "http://localhost:3000/";
+const PROJECT_URL = "https://tractian-test-ten.vercel.app/";
 
 export const SideMenu: React.FC = () => {
   const { push, pathname } = useRouter();
