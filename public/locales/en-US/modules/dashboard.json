@@ -13,6 +13,7 @@
   "more_details": "More details",
   "new_work_order": "New work order",
   "totalCollectsUptime": "Total collection time",
+  "outsider_asset": "Asset outside this user's unit",
   "status": {
     "inAlert": "In alert",
     "inDowntime": "Inactive",

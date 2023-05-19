@@ -5,4 +5,5 @@ module.exports = {
     locales: ['en-US', 'pt-BR'],
   },
   trailingSlash: true,
+  localePath: path.resolve("./public/locales"),
 };

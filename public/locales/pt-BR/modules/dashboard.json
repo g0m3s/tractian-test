@@ -12,6 +12,7 @@
   "unit_assets": "Ativos da unidade",
   "asset_detail": "Detalhes do ativo",
   "new_work_order": "Nova ordem de serviço",
+  "outsider_asset": "Ativo fora da unidade deste usuário",
   "status": {
     "inAlert": "Em alerta",
     "inDowntime": "Inativo",

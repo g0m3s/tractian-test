@@ -101,7 +101,7 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
               </HStack>
 
               <HStack pt={1} hidden={item.unitId === userUnit?.id}>
-                <Text fontWeight={'semibold'} fontSize={'sm'} color="red">Ativo fora da unidade deste usuário</Text>
+                <Text fontWeight={'semibold'} fontSize={'sm'} color="red">{t('outsider_asset')}</Text>
               </HStack>
 
               <HStack pt={3} justifyContent={"space-between"} w="100%">
