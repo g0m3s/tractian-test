@@ -131,20 +131,24 @@ export const SideMenu: React.FC = () => {
         </VStack>
 
         <Stack
+          pb={2}
           opacity={0.5}
           color={color}
+          alignItems={"flex-end"}
           gap={{ base: 1, md: 3, lg: 3 }}
           direction={{ base: "column", md: "row", lg: "row" }}
         >
-          <Stack>
-            <Box display="flex" alignItems="center">
-              <Icon color="black" as={Moon} boxSize={6} mr={2} />
-              <Switch onChange={() => toggleColorMode()} size="lg" />
-              <Icon as={Sun} color="orange" boxSize={6} ml={2} />
-            </Box>
+          <Stack direction={{ base: "column", md: "row", lg: "row" }}>
+            {!isMobile && <Icon color="black" as={Moon} boxSize={6} mr={2} />}
+            {isMobile && <Text fontSize={"xs"}>Dark/light</Text>}
+            <Switch
+              size="lg"
+              orientation={"vertical"}
+              onChange={() => toggleColorMode()}
+            />
+            {!isMobile && <Icon as={Sun} color="orange" boxSize={6} ml={2} />}
           </Stack>
-
-          <HStack>
+          <Stack direction={{ base: "column", md: "row", lg: "row" }}>
             <Text
               cursor={"pointer"}
               onClick={() => handleLanguageChange("en-US")}
@@ -158,7 +162,7 @@ export const SideMenu: React.FC = () => {
             >
               Pt-BR
             </Text>
-          </HStack>
+          </Stack>
         </Stack>
       </VStack>
     </>
