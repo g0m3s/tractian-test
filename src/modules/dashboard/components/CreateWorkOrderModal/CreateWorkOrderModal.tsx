@@ -8,6 +8,7 @@ import {
   Checkbox,
   FormLabel,
   FormControl,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 import { useRecoilState } from "recoil";
@@ -25,6 +26,7 @@ export const CreateWorkOrderModal: React.FC<CreateWorkOrderModalProps> = ({
   onClose,
 }) => {
   const [users] = useRecoilState(usersState);
+  const bg = useColorModeValue("#FFF", "rgb(24, 26, 27)");
   const { t } = useTranslation(["modules/dashboard", "common"]);
   const [assignedUsers, setAssignedUsers] = useState<number[]>([]);
 
@@ -60,7 +62,7 @@ export const CreateWorkOrderModal: React.FC<CreateWorkOrderModalProps> = ({
           hide: false,
         }}
       >
-        <VStack w="100%">
+        <VStack w="100%" bg={bg} alignItems={"flex-start"}>
           <FormControl>
             <FormLabel>{t("common:title")}</FormLabel>
             <Input />

@@ -6,6 +6,7 @@ import {
   Checkbox,
   Collapse,
   useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
@@ -62,9 +63,11 @@ export const WorkOrders: React.FC<WorkOrdersProps> = ({
     }
   };
 
+  const color = useColorModeValue("#242424", "#FFF");
+
   return (
     <VStack minW={"300px"} w={"300px"}>
-      <Text mb={4} fontSize={"xl"} fontWeight={"semibold"} color="#242424">
+      <Text mb={4} fontSize={"xl"} fontWeight={"semibold"} color={color}>
         {generateInfos()?.title}
       </Text>
       {items.map((task) => (

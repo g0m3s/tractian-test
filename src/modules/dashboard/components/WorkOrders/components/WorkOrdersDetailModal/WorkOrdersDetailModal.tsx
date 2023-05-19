@@ -1,5 +1,12 @@
 import { useTranslation } from "next-i18next";
-import { Text, HStack, VStack, Divider, Checkbox } from "@chakra-ui/react";
+import {
+  Text,
+  HStack,
+  VStack,
+  Divider,
+  Checkbox,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 import { IWorkOrder } from "~/types/api";
 import { useRecoilState } from "recoil";
@@ -20,6 +27,7 @@ export const WorkOrdersDetailModal: React.FC<WorkOrdersDetailModalProps> = ({
   onClose,
 }) => {
   const [users] = useRecoilState(usersState);
+  const bg = useColorModeValue("#FFF", "rgb(24, 26, 27)");
   const { t } = useTranslation(["modules/dashboard", "common"]);
   const [assignedUsers, setAssignedUsers] = useState<number[]>();
   const [workOrders, setWorkOrders] = useRecoilState(workOrdersState);
@@ -82,40 +90,42 @@ export const WorkOrdersDetailModal: React.FC<WorkOrdersDetailModalProps> = ({
           },
         }}
       >
-        <Text my={5} fontSize={"xl"} fontWeight={"semibold"}>
-          {workOrder?.title}
-        </Text>
-        <VStack w="100%">
-          {workOrder?.checklist.map((checklistItem) => (
-            <HStack w={"100%"} alignItems={"flex-start"}>
-              <Checkbox isChecked={checklistItem.completed}>
-                <Text fontSize={"xl"}>{checklistItem.task}</Text>
-              </Checkbox>
-            </HStack>
-          ))}
-        </VStack>
+        <VStack w="100%" bg={bg} alignItems={"flex-start"}>
+          <Text my={5} fontSize={"xl"} fontWeight={"semibold"}>
+            {workOrder?.title}
+          </Text>
+          <VStack w="100%">
+            {workOrder?.checklist.map((checklistItem) => (
+              <HStack w={"100%"} alignItems={"flex-start"}>
+                <Checkbox isChecked={checklistItem.completed}>
+                  <Text fontSize={"xl"}>{checklistItem.task}</Text>
+                </Checkbox>
+              </HStack>
+            ))}
+          </VStack>
 
-        <Divider my={5} />
+          <Divider my={5} />
 
-        <Text mb={2} fontSize={"xl"} fontWeight={"semibold"} w="100%">
-          {t("details.status")}:
-        </Text>
-        <Text w="100%">{workOrder?.status}</Text>
+          <Text mb={2} fontSize={"xl"} fontWeight={"semibold"} w="100%">
+            {t("details.status")}:
+          </Text>
+          <Text w="100%">{workOrder?.status}</Text>
 
-        <Divider my={5} />
+          <Divider my={5} />
 
-        <Text mb={2} fontSize={"xl"} w="100%" fontWeight={"semibold"}>
-          {t("common:description")}:
-        </Text>
-        <Text>{workOrder?.description}</Text>
+          <Text mb={2} fontSize={"xl"} w="100%" fontWeight={"semibold"}>
+            {t("common:description")}:
+          </Text>
+          <Text>{workOrder?.description}</Text>
 
-        <Divider my={5} />
+          <Divider my={5} />
 
-        <Text mb={2} fontSize={"xl"} fontWeight={"semibold"} w="100%">
-          {t("details.assignedUsers")}:
-        </Text>
-        <VStack alignItems={"flex-start"} mt={1}>
-          {assignedUsersList}
+          <Text mb={2} fontSize={"xl"} fontWeight={"semibold"} w="100%">
+            {t("details.assignedUsers")}:
+          </Text>
+          <VStack alignItems={"flex-start"} mt={1}>
+            {assignedUsersList}
+          </VStack>
         </VStack>
       </RightSideModal>
     </>

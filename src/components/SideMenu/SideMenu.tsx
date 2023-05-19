@@ -2,18 +2,24 @@ import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { useTranslation } from "next-i18next";
 import { accountState } from "~/atoms/account";
-import { Grid, User, Home } from "react-feather";
+import { Grid, User, Home, Moon, Sun } from "react-feather";
 import tractionLogo from "~/assets/logos/tractianLogo.png";
 import tractianShortLogo from "~/assets/logos/tractianShortLogo.png";
 import {
   Box,
+  Button,
   Divider,
   HStack,
+  Icon,
+  IconButton,
   Image,
   Stack,
+  Switch,
   Text,
   VStack,
   useBreakpointValue,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 const PROJECT_URL = "https://tractian-test-ten.vercel.app/";
@@ -21,6 +27,7 @@ const PROJECT_URL = "https://tractian-test-ten.vercel.app/";
 export const SideMenu: React.FC = () => {
   const { push, pathname } = useRouter();
   const { t } = useTranslation("common");
+  const { toggleColorMode } = useColorMode();
   const [account, _] = useRecoilState(accountState);
   const isMobile = useBreakpointValue({ base: true, md: false, lg: false });
 
@@ -50,10 +57,13 @@ export const SideMenu: React.FC = () => {
     },
   ];
 
+  const color = useColorModeValue("#242424", "#FFF");
+  const bg = useColorModeValue("#FFF", "rgb(24, 26, 27)");
+
   return (
     <>
       <VStack
-        bg="#FFF"
+        bg={bg}
         h={"100%"}
         borderRadius={20}
         p={{ base: 2, md: 5, lg: 5 }}
@@ -82,7 +92,7 @@ export const SideMenu: React.FC = () => {
             boxSize={{ base: "50px", md: "100px", lg: "100px" }}
             src="https://xsgames.co/randomusers/avatar.php?g=female"
           />
-          <Text color={"#242424"} fontWeight={"semibold"}>
+          <Text color={color} fontWeight={"semibold"}>
             {isMobile ? account?.name.split(" ")[0] : account?.name}
           </Text>
           <VStack w={"100%"} pt={10}>
@@ -105,12 +115,12 @@ export const SideMenu: React.FC = () => {
                 >
                   <Box
                     as={item.icon}
-                    color={isCurrentScreen ? "#FFF" : "#242424"}
+                    color={isCurrentScreen ? "#FFF" : color}
                   />
                   <Text
                     hidden={isMobile}
                     fontWeight={"semibold"}
-                    color={isCurrentScreen ? "#FFF" : "#242424"}
+                    color={isCurrentScreen ? "#FFF" : color}
                   >
                     {item.name}
                   </Text>
@@ -119,25 +129,36 @@ export const SideMenu: React.FC = () => {
             })}
           </VStack>
         </VStack>
+
         <Stack
           opacity={0.5}
-          color="#242424"
+          color={color}
           gap={{ base: 1, md: 3, lg: 3 }}
           direction={{ base: "column", md: "row", lg: "row" }}
         >
-          <Text
-            cursor={"pointer"}
-            onClick={() => handleLanguageChange("en-US")}
-          >
-            En-US
-          </Text>
-          <Divider opacity={0.15} borderRadius={10} orientation="vertical" />
-          <Text
-            cursor={"pointer"}
-            onClick={() => handleLanguageChange("pt-BR")}
-          >
-            Pt-BR
-          </Text>
+          <Stack>
+            <Box display="flex" alignItems="center">
+              <Icon color="black" as={Moon} boxSize={6} mr={2} />
+              <Switch onChange={() => toggleColorMode()} size="lg" />
+              <Icon as={Sun} color="orange" boxSize={6} ml={2} />
+            </Box>
+          </Stack>
+
+          <HStack>
+            <Text
+              cursor={"pointer"}
+              onClick={() => handleLanguageChange("en-US")}
+            >
+              En-US
+            </Text>
+            <Divider opacity={0.5} borderRadius={10} orientation="vertical" />
+            <Text
+              cursor={"pointer"}
+              onClick={() => handleLanguageChange("pt-BR")}
+            >
+              Pt-BR
+            </Text>
+          </HStack>
         </Stack>
       </VStack>
     </>

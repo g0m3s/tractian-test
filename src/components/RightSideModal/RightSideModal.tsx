@@ -9,6 +9,7 @@ import {
   ModalContent,
   CircularProgress,
   ModalCloseButton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 export interface RightSideModalProps {
@@ -33,6 +34,8 @@ export const RightSideModal: React.FC<RightSideModalProps> = ({
   children,
   _footer,
 }) => {
+  const bg = useColorModeValue("#FFF", "rgb(24, 26, 27)");
+
   return (
     <Modal
       isOpen={isOpen}
@@ -43,9 +46,10 @@ export const RightSideModal: React.FC<RightSideModalProps> = ({
     >
       <ModalOverlay backdropFilter="blur(3px)" />
       <ModalContent>
-        <ModalHeader>{title}</ModalHeader>
+        <ModalHeader bg={bg}>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody
+          bg={bg}
           zIndex={1}
           borderBottomRadius={"12px"}
           boxShadow={

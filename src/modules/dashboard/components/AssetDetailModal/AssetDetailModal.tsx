@@ -2,7 +2,16 @@ import { useMemo, useState } from "react";
 import enUS from "date-fns/locale/en-US";
 import { format, parseISO } from "date-fns";
 import { useTranslation } from "next-i18next";
-import { Text, Image, HStack, Divider, Checkbox } from "@chakra-ui/react";
+import {
+  Text,
+  Image,
+  HStack,
+  Divider,
+  Checkbox,
+  useColorModeValue,
+  VStack,
+  Stack,
+} from "@chakra-ui/react";
 
 import { IAsset } from "~/types/api";
 import { useRecoilState } from "recoil";
@@ -27,6 +36,7 @@ export const AssetDetailModal: React.FC<AssetsDetailModalProps> = ({
   const [users] = useRecoilState(usersState);
   const [units] = useRecoilState(unitsState);
   const [company] = useRecoilState(companyState);
+  const bg = useColorModeValue("#FFF", "rgb(24, 26, 27)");
   const { t } = useTranslation(["modules/dashboard", "common"]);
   const [assignedUsers, setAssignedUsers] = useState<number[]>();
 
@@ -83,92 +93,99 @@ export const AssetDetailModal: React.FC<AssetsDetailModalProps> = ({
           hide: true,
         }}
       >
-        <Image alt={asset?.name} src={asset?.image} borderRadius={10} />
-        <Text mt={5} textAlign={"center"} fontWeight={"bold"} fontSize={"3xl"}>
-          {asset?.name}
-        </Text>
+        <VStack w="100%" bg={bg} alignItems={"flex-start"}>
+          <Image alt={asset?.name} src={asset?.image} borderRadius={10} />
+          <Text
+            mt={5}
+            textAlign={"center"}
+            fontWeight={"bold"}
+            fontSize={"3xl"}
+          >
+            {asset?.name}
+          </Text>
 
-        <Text mb={2} mt={5} fontSize={"xl"}>
-          {t("details.metrics")}:
-        </Text>
-        <Text>
-          <b>{t("details.totalCollectsUptime")}</b> :{" "}
-          {convertHoursToDays(asset?.metrics.totalCollectsUptime)}
-        </Text>
-        <Text>
-          <b>{t("details.lastUptimeAt")}</b> :{" "}
-          {asset?.metrics.lastUptimeAt &&
-            format(
-              new Date(new Date(parseISO(asset.metrics.lastUptimeAt))),
-              "MMM dd, yyyy",
-              {
-                locale: enUS,
-              }
-            )}
-        </Text>
-        <Text>
-          <b>{t("details.totalUptime")}</b> :{" "}
-          {convertHoursToDays(asset?.metrics.totalUptime)}
-        </Text>
+          <Text mb={2} mt={5} fontSize={"xl"}>
+            {t("details.metrics")}:
+          </Text>
+          <Text>
+            <b>{t("details.totalCollectsUptime")}</b> :{" "}
+            {convertHoursToDays(asset?.metrics.totalCollectsUptime)}
+          </Text>
+          <Text>
+            <b>{t("details.lastUptimeAt")}</b> :{" "}
+            {asset?.metrics.lastUptimeAt &&
+              format(
+                new Date(new Date(parseISO(asset.metrics.lastUptimeAt))),
+                "MMM dd, yyyy",
+                {
+                  locale: enUS,
+                }
+              )}
+          </Text>
+          <Text>
+            <b>{t("details.totalUptime")}</b> :{" "}
+            {convertHoursToDays(asset?.metrics.totalUptime)}
+          </Text>
 
-        <Divider my={5} />
+          <Divider my={5} />
 
-        <Text mb={2} fontSize={"xl"}>
-          {t("more_details")}
-        </Text>
+          <Text mb={2} fontSize={"xl"}>
+            {t("more_details")}
+          </Text>
 
-        <FormattedText
-          description={t("details.maxTemp")}
-          content={`${asset?.specifications.maxTemp}°C`}
-        />
-        <FormattedText
-          description={t("details.power")}
-          content={asset?.specifications.power}
-        />
-        <FormattedText
-          description={t("details.rpm")}
-          content={asset?.specifications.rpm}
-        />
+          <FormattedText
+            description={t("details.maxTemp")}
+            content={`${asset?.specifications.maxTemp}°C`}
+          />
+          <FormattedText
+            description={t("details.power")}
+            content={asset?.specifications.power}
+          />
+          <FormattedText
+            description={t("details.rpm")}
+            content={asset?.specifications.rpm}
+          />
 
-        {/* FIXME: CHANGE TO NAME */}
-        <FormattedText
-          description={t("common:unitId")}
-          content={units?.find(({ id }) => id === asset?.unitId)?.name}
-        />
-        {/* FIXME: CHANGE TO NAME */}
-        <FormattedText
-          // content={asset?.companyId}
-          content={company?.name}
-          description={t("common:company")}
-        />
+          <FormattedText
+            description={t("common:unitId")}
+            content={units?.find(({ id }) => id === asset?.unitId)?.name}
+          />
 
-        <FormattedText
-          hide={!asset?.model}
-          content={asset?.model}
-          description={t("details.model")}
-        />
+          <FormattedText
+            content={company?.name}
+            description={t("common:company")}
+          />
 
-        <HStack>
-          <Text fontWeight={"bold"}>{t("details.status")}:</Text>
-          <AssetStatusBadge hideTag status={asset?.status} />
-        </HStack>
+          <FormattedText
+            hide={!asset?.model}
+            content={asset?.model}
+            description={t("details.model")}
+          />
 
-        <HStack>
-          <b>{t("details.sensors")}:</b>{" "}
-          {asset?.sensors.map((item) => (
-            <Text>{item},</Text>
-          ))}
-        </HStack>
+          <HStack>
+            <Text fontWeight={"bold"}>{t("details.status")}:</Text>
+            <AssetStatusBadge hideTag status={asset?.status} />
+          </HStack>
 
-        <Divider my={5} />
+          <HStack>
+            <b>{t("details.sensors")}:</b>{" "}
+            {asset?.sensors.map((item) => (
+              <Text>{item},</Text>
+            ))}
+          </HStack>
 
-        <Text mb={2} fontSize={"xl"}>
-          {t("details.assignedUsers")}
-        </Text>
-        {assignedUsersList}
+          <Divider my={5} />
 
-        <Divider my={5} />
-        <HealthHistoryChart healthHistory={asset?.healthHistory} />
+          <Text mb={2} fontSize={"xl"}>
+            {t("details.assignedUsers")}
+          </Text>
+          {assignedUsersList}
+
+          <Divider my={5} />
+          <Stack w="100%">
+            <HealthHistoryChart healthHistory={asset?.healthHistory} />
+          </Stack>
+        </VStack>
       </RightSideModal>
     </>
   );

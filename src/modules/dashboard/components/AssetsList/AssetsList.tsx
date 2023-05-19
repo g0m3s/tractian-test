@@ -6,14 +6,14 @@ import {
   GridItem,
   SimpleGrid,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { IAsset } from "~/types/api";
-import { useCallback, useMemo, useRef } from "react";
 import { useRecoilState } from "recoil";
 import * as Highcharts from "highcharts";
 import { Maximize2 } from "react-feather";
 import { unitsState } from "~/atoms/units";
-import { accountState } from "~/atoms/account";
+import { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { generateOptions } from "~/utils/utils";
 import { AssetStatusBadge } from "../AssetStatusBadge";
@@ -27,7 +27,6 @@ interface AssetsListProps {
 export const AssetsList: React.FC<AssetsListProps> = (props) => {
   const { assets, handleSelectedAsset } = props;
   const [units] = useRecoilState(unitsState);
-  const [account] = useRecoilState(accountState);
   const { t } = useTranslation("modules/dashboard");
   const columns = useBreakpointValue({ base: 1, md: 3 });
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
@@ -38,12 +37,15 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
     [units]
   );
 
+  const color = useColorModeValue("#242424", "#FFF");
+  const bg = useColorModeValue("#FFF", "rgb(24, 26, 27)");
+
   return (
     <>
       <Text
-        w="100%"
         mb={4}
-        color="#242424"
+        w="100%"
+        color={color}
         fontSize={"2xl"}
         textAlign={"start"}
         fontWeight={"bold"}
@@ -62,12 +64,13 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
             <VStack
               p={5}
               w={"100%"}
-              bg={"#FFF"}
+              bg={bg}
               borderRadius={30}
+              border="1px solid rgba(255, 255, 255, .08)"
               boxShadow={"0px 0px 10px rgba(0,0,0,.08)"}
             >
               <Text
-                color="#242424"
+                color={color}
                 fontSize={"xl"}
                 fontWeight={"bold"}
                 textAlign={"center"}
@@ -85,6 +88,7 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
                 />
                 <HighchartsReact
                   options={generateOptions({
+                    color: color,
                     isMobile: isMobile,
                     status: item.status,
                     value: item.healthscore,

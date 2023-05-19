@@ -15,11 +15,13 @@ export const getCookie = (cookieName: string) => {
 interface generateOptionsProps {
   value: number;
   title: string;
+  color?: string;
   isMobile?: boolean;
   status?: AssetStatus;
 }
 
 export const generateOptions = ({
+  color,
   title,
   value,
   status,
@@ -32,6 +34,7 @@ export const generateOptions = ({
       text: `${title}: ${value}%`,
       style: {
         fontSize: "12px",
+        color: color || 'initial'
       },
     },
     credits: {

@@ -1,21 +1,8 @@
-import { IUnit } from "~/types/api";
-import { SideMenu } from "../SideMenu";
-import { useRecoilState } from "recoil";
-import { unitsState } from "~/atoms/units";
-import { useTranslation } from "next-i18next";
-import { accountState } from "~/atoms/account";
-import { PropsWithChildren, useEffect, useState } from "react";
-import {
-  Box,
-  Divider,
-  HStack,
-  Select,
-  Stack,
-  Text,
-  VStack,
-  useBreakpointValue,
-} from "@chakra-ui/react";
 import Head from "next/head";
+import { SideMenu } from "../SideMenu";
+import { useTranslation } from "next-i18next";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { HStack, Stack, VStack, useColorModeValue } from "@chakra-ui/react";
 import {
   CarrouselCards,
   WorkOrdersChart,
@@ -31,6 +18,8 @@ export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
 }) => {
   const { t } = useTranslation("common");
   const [, setCompany] = useState<any>();
+
+  const bg = useColorModeValue("rgba(236, 236, 236, 0.8)", "rgb(35, 38, 39)");
 
   useEffect(() => {
     if (!isLogin) {
@@ -57,11 +46,11 @@ export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
         <title>Tractian | Dashboard</title>
       </Head>
       <Stack
+        bg={bg}
         w={"100%"}
         height={"100vh"}
         overflow={"hidden"}
         p={{ base: 2, md: 8, lg: 8 }}
-        bg="rgba(236, 236, 236, 0.8)"
       >
         <HStack
           w={"100%"}
