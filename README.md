@@ -1,8 +1,8 @@
 # Introdução
 
-Conforme alinhado, o time de desenvolvimento do React não indica mais a criação de aplicações usando CRA e, por isso, o projeto foi desenvolvido em Next.js. A biblioteca utilizada para estilização foi a Chakra UI.
+Conforme alinhado, o time de desenvolvimento do React não indica mais a criação de aplicações usando CRA e, por isso, o projeto foi desenvolvido em Next.js. A biblioteca utilizada para estilização foi a [Chakra UI](https://chakra-ui.com/).
 
-A demonstração do projeto está disponível aqui. O deploy foi feito utilizando os serviços da Vercel, que também está hospedando o site no momento.
+A demonstração do projeto está disponível [aqui](https://tractian-test-ten.vercel.app/dashboard). O deploy foi feito utilizando os serviços da Vercel, que também está hospedando o site no momento.
 
 ## Features adicionais
 - Seguindo a linha de expansão da Tractian, um projeto internacionalizado sem dúvidas é crucial. Por isso, este teste já conta com 2 idiomas (português e inglês). Para alternar entre os modos, basta utilizar o switch que fica no menu lateral à esquerda.
