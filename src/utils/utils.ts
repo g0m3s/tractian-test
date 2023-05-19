@@ -33,7 +33,7 @@ export const generateOptions = ({
     title: {
       text: `${title}: ${value}%`,
       style: {
-        fontSize: isMobile ? "10px" : "12px",
+        fontSize: isMobile ? "9px" : "12px",
         color: color || "initial",
       },
       floating: isMobile,
