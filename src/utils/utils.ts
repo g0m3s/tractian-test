@@ -4,8 +4,8 @@ import { generateStatusTagColor } from "~/modules/dashboard/components";
 export const getCookie = (cookieName: string) => {
   if (document) {
     const cookie = {} as any;
-    document.cookie.split(';').forEach(function (el) {
-      const [k, v] = el.split('=');
+    document.cookie.split(";").forEach(function (el) {
+      const [k, v] = el.split("=");
       cookie[k.trim()] = v;
     });
     return cookie[cookieName];
@@ -33,16 +33,18 @@ export const generateOptions = ({
     title: {
       text: `${title}: ${value}%`,
       style: {
-        fontSize: "12px",
-        color: color || 'initial'
+        fontSize: isMobile ? "10px" : "12px",
+        color: color || "initial",
       },
+      floating: isMobile,
+      verticalAlign: isMobile ? "middle" : "top",
     },
     credits: {
       enabled: false,
     },
     chart: {
       backgroundColor: "transparent",
-      height: isMobile ? "100%" : "120px",
+      height: isMobile ? "90px" : "120px",
     },
     series: [
       {

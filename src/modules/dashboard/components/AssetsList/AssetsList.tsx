@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   useBreakpointValue,
   useColorModeValue,
+  Stack,
 } from "@chakra-ui/react";
 import { IAsset } from "~/types/api";
 import { useRecoilState } from "recoil";
@@ -53,67 +54,60 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
         {t("assets_list")}
       </Text>
 
-      <SimpleGrid w="100%" columns={columns} gap={5}>
+      <SimpleGrid w="100%" columns={[1, 2, 3]} gap={5}>
         {assets?.map((item) => (
-          <GridItem
-            w="100%"
-            flex={1}
-            cursor={"pointer"}
-            onClick={() => handleSelectedAsset(item.id)}
+          <VStack
+            p={5}
+            w={"100%"}
+            bg={bg}
+            borderRadius={30}
+            border="1px solid rgba(255, 255, 255, .08)"
+            boxShadow={"0px 0px 10px rgba(0,0,0,.08)"}
           >
-            <VStack
-              p={5}
-              w={"100%"}
-              bg={bg}
-              borderRadius={30}
-              border="1px solid rgba(255, 255, 255, .08)"
-              boxShadow={"0px 0px 10px rgba(0,0,0,.08)"}
+            <Text
+              color={color}
+              fontSize={"xl"}
+              fontWeight={"bold"}
+              textAlign={"center"}
+              whiteSpace={"nowrap"}
             >
-              <Text
-                color={color}
-                fontSize={"xl"}
-                fontWeight={"bold"}
-                textAlign={"center"}
-                whiteSpace={"nowrap"}
-              >
-                {item.name}
+              {item.name}
+            </Text>
+            <HStack h={"100%"} w={"100%"}>
+              <Image
+                alt=""
+                src={item.image}
+                borderRadius={10}
+                fallbackSrc="https://via.placeholder.com/150"
+                boxSize={{ base: "90px", md: "120px", lg: "120px" }}
+              />
+              <HighchartsReact
+                options={generateOptions({
+                  color: color,
+                  isMobile: isMobile,
+                  status: item.status,
+                  value: item.healthscore,
+                  title: isMobile ? t("health") : t("health_score"),
+                })}
+                highcharts={Highcharts}
+                ref={chartComponentRef}
+              />
+            </HStack>
+
+            <HStack opacity={0.8} pt={1} hidden={userUnit(item.unitId)}>
+              <Text fontWeight={"semibold"} fontSize={"sm"} color="red">
+                {t("outsider_asset")}
               </Text>
-              <HStack h={"100%"} w={"100%"}>
-                <Image
-                  alt=""
-                  src={item.image}
-                  borderRadius={10}
-                  fallbackSrc="https://via.placeholder.com/150"
-                  boxSize={{ base: "100px", md: "120px", lg: "120px" }}
-                />
-                <HighchartsReact
-                  options={generateOptions({
-                    color: color,
-                    isMobile: isMobile,
-                    status: item.status,
-                    value: item.healthscore,
-                    title: isMobile ? t("health") : t("health_score"),
-                  })}
-                  highcharts={Highcharts}
-                  ref={chartComponentRef}
-                />
-              </HStack>
+            </HStack>
 
-              <HStack opacity={0.8} pt={1} hidden={userUnit(item.unitId)}>
-                <Text fontWeight={"semibold"} fontSize={"sm"} color="red">
-                  {t("outsider_asset")}
-                </Text>
+            <HStack pt={3} justifyContent={"space-between"} w="100%">
+              <HStack opacity={0.5}>
+                <Text fontSize={"sm"}>{t("common:show_more")}</Text>
+                <Maximize2 opacity={0.5} size={12} />
               </HStack>
-
-              <HStack pt={3} justifyContent={"space-between"} w="100%">
-                <HStack opacity={0.5}>
-                  <Text fontSize={"sm"}>{t("common:show_more")}</Text>
-                  <Maximize2 opacity={0.5} size={12} />
-                </HStack>
-                <AssetStatusBadge status={item.status} />
-              </HStack>
-            </VStack>
-          </GridItem>
+              <AssetStatusBadge status={item.status} />
+            </HStack>
+          </VStack>
         ))}
       </SimpleGrid>
     </>
