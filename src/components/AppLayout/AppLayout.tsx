@@ -1,12 +1,25 @@
 import { IUnit } from "~/types/api";
 import { SideMenu } from "../SideMenu";
 import { useRecoilState } from "recoil";
-import { unitState } from "~/atoms/unit";
+import { unitsState } from "~/atoms/units";
 import { useTranslation } from "next-i18next";
 import { accountState } from "~/atoms/account";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { Box, Divider, HStack, Select, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  HStack,
+  Select,
+  Stack,
+  Text,
+  VStack,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import Head from "next/head";
+import {
+  CarrouselCards,
+  WorkOrdersChart,
+} from "~/modules/dashboard/components";
 
 interface AppLayoutProps {
   isLogin?: boolean;
@@ -17,9 +30,7 @@ export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
   isLogin,
 }) => {
   const { t } = useTranslation("common");
-  const [company, setCompany] = useState<any>();
-  const [account] = useRecoilState(accountState);
-  const [unit, setUnit] = useRecoilState(unitState);
+  const [, setCompany] = useState<any>();
 
   useEffect(() => {
     if (!isLogin) {
@@ -40,43 +51,31 @@ export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
     }
   }, []);
 
-  useEffect(() => {
-    if (!isLogin) {
-      fetch("https://my-json-server.typicode.com/tractian/fake-api/units")
-        .then((res) => res.json())
-        .then((res: IUnit[]) => {
-          const unit = res.find((item) => item.id === account?.unitId);
-          unit && setUnit(unit);
-        });
-    }
-  }, []);
-
   return (
     <>
       <Head>
         <title>Tractian | Dashboard</title>
       </Head>
       <Stack
-        p={10}
+        w={"100%"}
         height={"100vh"}
         overflow={"hidden"}
-        bg="rgba(255, 255, 255, 0.87)"
+        p={{ base: 2, md: 8, lg: 8 }}
+        bg="rgba(236, 236, 236, 0.8)"
       >
         <HStack
-          p={10}
-          pt={"100px"}
-          bg="#242424"
+          w={"100%"}
           height={"100%"}
           borderRadius={20}
           position={"relative"}
           alignItems={"flex-start"}
-          boxShadow={"0px 0px 10px rgba(0,0,0,.5)"}
         >
           {!isLogin && <SideMenu />}
           <Stack
             w={"100%"}
             h={"100%"}
             overflowY={"scroll"}
+            overflowX={"hidden"}
             sx={{
               "*::-webkit-scrollbar": {
                 width: "5px",
@@ -92,7 +91,27 @@ export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
           >
             {children}
           </Stack>
-          <HStack top={10} right={10} hidden={isLogin} position={"absolute"}>
+
+          <VStack
+            p={2}
+            m={2}
+            h="100%"
+            bg="#FFF"
+            w="400px"
+            hidden
+            borderRadius={20}
+            boxShadow={"0px 0px 10px rgba(0,0,0,.08)"}
+          >
+            <Stack h="100%" w="100%">
+              <CarrouselCards />
+            </Stack>
+            <Stack h="100%" w="100%">
+              <WorkOrdersChart />
+            </Stack>
+          </VStack>
+
+          {/* <HStack top={10} right={10} hidden={isLogin} position={"absolute"}> */}
+          {/* <HStack top={10} right={10} hidden={true} position={"absolute"}>
             <Box>
               <Text color="#FFF">
                 {t("unit")}: {unit?.name}
@@ -104,7 +123,7 @@ export const AppLayout: React.FC<PropsWithChildren<AppLayoutProps>> = ({
                 <option value={item.value}>{item.name}</option>
               ))}
             </Select>
-          </HStack>
+          </HStack> */}
         </HStack>
       </Stack>
     </>

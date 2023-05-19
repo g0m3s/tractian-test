@@ -1,12 +1,31 @@
 import { AssetStatus } from "~/types/api";
-import { generateStatusColor } from "~/modules/dashboard/components";
+import { generateStatusTagColor } from "~/modules/dashboard/components";
 
-export const generateOptions = (
-  value: number,
-  title: string,
-  status?: AssetStatus
-): Highcharts.Options => {
-  const valueColor = generateStatusColor(status);
+export const getCookie = (cookieName: string) => {
+  if (document) {
+    const cookie = {} as any;
+    document.cookie.split(';').forEach(function (el) {
+      const [k, v] = el.split('=');
+      cookie[k.trim()] = v;
+    });
+    return cookie[cookieName];
+  }
+};
+
+interface generateOptionsProps {
+  value: number;
+  title: string;
+  isMobile?: boolean;
+  status?: AssetStatus;
+}
+
+export const generateOptions = ({
+  title,
+  value,
+  status,
+  isMobile,
+}: generateOptionsProps): Highcharts.Options => {
+  const valueColor = generateStatusTagColor(status);
 
   return {
     title: {
@@ -19,8 +38,8 @@ export const generateOptions = (
       enabled: false,
     },
     chart: {
-      height: "120px",
       backgroundColor: "transparent",
+      height: isMobile ? "100%" : "120px",
     },
     series: [
       {

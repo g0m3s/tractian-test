@@ -1,7 +1,19 @@
 {
+  "day": "Dia",
+  "days": "Dias",
+  "hour": "Hora",
+  "hours": "Horas",
+  "title": "Título",
   "unit": "Unidade",
+  "status": "Status",
+  "units": "Unidades",
   "users": "Usuários",
+  "company": "Empresa",
   "dashboard": "Dashboard",
+  "description": "Descrição",
   "settings": "Configurações",
-  "show_more": "Mostrar mais"
+  "show_more": "Mostrar mais",
+  "last_insights": "Últimos insights",
+  "list_of_units": "Lista de unidades",
+  "todo_tasks_state": "Status das tarefas a fazer"
 }

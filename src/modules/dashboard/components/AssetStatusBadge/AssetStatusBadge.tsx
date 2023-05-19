@@ -1,12 +1,14 @@
 import { useMemo } from "react";
-import { Tag } from "@chakra-ui/react";
+import { Tag, Text } from "@chakra-ui/react";
+import { AssetStatus } from "~/types/api";
+import { useTranslation } from "next-i18next";
 
 export interface AssetStatusBadgeProps {
-  children: React.ReactNode;
+  hideTag?: boolean;
   status?: AssetStatus;
 }
 
-export const generateStatusColor = (status?: AssetStatus) => {
+export const generateStatusTagColor = (status?: AssetStatus) => {
   switch (status) {
     case "inAlert":
       return "orange";
@@ -23,11 +25,51 @@ export const generateStatusColor = (status?: AssetStatus) => {
 
 export const AssetStatusBadge: React.FC<AssetStatusBadgeProps> = ({
   status,
-  children,
+  hideTag,
 }) => {
+  const { t } = useTranslation("modules/dashboard");
+
   const bgColor = useMemo(() => {
-    return generateStatusColor(status);
+    return generateStatusTagColor(status);
   }, [status]);
+
+  const textInfos = useMemo(() => {
+    switch (status) {
+      case "inAlert":
+        return {
+          content: t("status.inAlert"),
+          color: "orange",
+        };
+      case "inDowntime":
+        return {
+          content: t("status.inDowntime"),
+          color: "red",
+        };
+      case "inOperation":
+        return {
+          content: t("status.inOperation"),
+          color: "green",
+        };
+      case "unplannedStop":
+        return {
+          content: t("status.unplannedStop"),
+          color: "red",
+        };
+      default:
+        return {
+          content: " - ",
+          color: "grey",
+        };
+    }
+  }, [status]);
+
+  if (hideTag) {
+    return (
+      <Text color={textInfos.color}>
+        {textInfos.content}
+      </Text>
+    );
+  }
 
   return (
     <Tag
@@ -36,7 +78,7 @@ export const AssetStatusBadge: React.FC<AssetStatusBadgeProps> = ({
       borderRadius={"full"}
       fontWeight={"medium"}
     >
-      {children}
+      <Text fontWeight={'semibold'} color="#FFF">{textInfos.content}</Text>
     </Tag>
   );
 };

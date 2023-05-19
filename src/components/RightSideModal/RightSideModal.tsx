@@ -9,7 +9,7 @@ import {
   ModalContent,
   CircularProgress,
   ModalCloseButton,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 export interface RightSideModalProps {
   isOpen: boolean;
@@ -37,9 +37,9 @@ export const RightSideModal: React.FC<RightSideModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      variant={'right-align'}
-      motionPreset={'slideInRight'}
-      size={{ base: '3xl', md: 'lg' }}
+      variant={"right-align"}
+      motionPreset={"slideInRight"}
+      size={{ base: "3xl", md: "lg" }}
     >
       <ModalOverlay backdropFilter="blur(3px)" />
       <ModalContent>
@@ -47,9 +47,9 @@ export const RightSideModal: React.FC<RightSideModalProps> = ({
         <ModalCloseButton />
         <ModalBody
           zIndex={1}
-          borderBottomRadius={'12px'}
+          borderBottomRadius={"12px"}
           boxShadow={
-            '2px 4px 4px rgba(0, 0, 0, 0.05), 0px 4px 15px rgba(0, 0, 0, 0.05)'
+            "2px 4px 4px rgba(0, 0, 0, 0.05), 0px 4px 15px rgba(0, 0, 0, 0.05)"
           }
         >
           {children}
@@ -63,9 +63,10 @@ export const RightSideModal: React.FC<RightSideModalProps> = ({
               </Stack>
             ) : (
               <Button
-                width={'full'}
+                color="#FFF"
                 type="submit"
-                height={'full'}
+                width={"full"}
+                height={"full"}
                 variant="unstyled"
                 form={_footer.formId}
                 onClick={_footer.onClick}

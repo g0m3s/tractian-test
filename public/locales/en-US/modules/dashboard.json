@@ -1,11 +1,38 @@
 {
   "toDo": "To do",
+  "health": "Health",
   "metrics": "Metrics",
+  "add_task": "Add task",
   "completed": "Completed",
+  "assets_list": "Assets list",
   "inProgress": "In Progress",
   "workorders": "Work orders",
   "unit_assets": "Unity assets",
   "health_score": "Health score",
   "asset_detail": "Asset detail",
-  "more_details": "More details"
+  "more_details": "More details",
+  "new_work_order": "New work order",
+  "totalCollectsUptime": "Total collection time",
+  "status": {
+    "inAlert": "In alert",
+    "inDowntime": "Inactive",
+    "unplannedStop": "Stopped",
+    "inOperation": "In operation"
+  },
+  "details": {
+    "rpm": "RPM",
+    "model": "Model",
+    "power": "Power",
+    "status": "Status",
+    "metrics": "Metrics",
+    "sensors": "Sensors",
+    "maxTemp": "Max temp",
+    "totalUptime": "Total uptime",
+    "assignedUsers": "Responsible",
+    "more_details": "More details",
+    "lastUptimeAt": "Last Uptime At",
+    "health_history": "Health history",
+    "work_order_detail": "Work order detail",
+    "totalCollectsUptime": "Total collection time"
+  }
 }

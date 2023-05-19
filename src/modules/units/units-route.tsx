@@ -13,19 +13,19 @@ import {
 import { companyState } from "~/atoms/company";
 import { useRecoilState } from "recoil";
 import { unitsState } from "~/atoms/units";
+import { IUnit } from "~/types/api";
 
-export const UsersRoute: NextPage = () => {
-  const { t } = useTranslation(["modules/users", "common"]);
-  const [users, setUsers] = useState<any>();
+export const UnitsRoute: NextPage = () => {
   const [company] = useRecoilState(companyState);
-  const [units] = useRecoilState(unitsState);
+  const [units, setUnits] = useRecoilState(unitsState);
+  const { t } = useTranslation(["common"]);
   const isMobile = useBreakpointValue({ base: true, md: false, lg: false });
 
   useEffect(() => {
-    fetch("https://my-json-server.typicode.com/tractian/fake-api/users")
+    fetch("https://my-json-server.typicode.com/tractian/fake-api/units")
       .then((res) => res.json())
-      .then((res) => {
-        setUsers(res);
+      .then((res: IUnit[]) => {
+        setUnits(res);
       });
   }, []);
 
@@ -47,9 +47,9 @@ export const UsersRoute: NextPage = () => {
           fontSize={"3xl"}
           fontWeight={"bold"}
         >
-          {t("list_of_users")}
+          {t("list_of_units")}
         </Text>
-        {users?.map((user: any) => (
+        {units?.map((unity) => (
           <HStack
             w={"100%"}
             borderRadius={10}
@@ -70,33 +70,22 @@ export const UsersRoute: NextPage = () => {
                 fontWeight={"semibold"}
                 fontSize={{ base: "sm", md: "md", lg: "md" }}
               >
-                {user.name}
+                {unity.name}
               </Text>
               <Text
                 color="#242424"
-                m={"0 !important"}
                 hidden={!isMobile}
                 fontSize={{ base: "sm", md: "md", lg: "md" }}
               >
-                {units?.find(({ id }) => id === user.unitId)?.name}
-              </Text>
-              <Text
-                fontSize={{ base: "sm", md: "md", lg: "md" }}
-                m={"0 !important"}
-                color="#242424"
-              >
-                {user.email}
+                {t("common:company")}: {company?.name}
               </Text>
             </VStack>
             <Divider hidden={isMobile} orientation="vertical" />
             <VStack hidden={isMobile} w="100%" alignItems={"flex-end"}>
-              <Text color="#242424" fontWeight={"semibold"}>
-                {t("common:company")}: {company?.name}
+              <Text fontWeight={"semibold"} color="#242424">
+                {t("common:company")}:
               </Text>
-              <Text m={"0 !important"} color="#242424">
-                {t("common:unit")}:{" "}
-                {units?.find(({ id }) => id === user.unitId)?.name}
-              </Text>
+              <Text color="#242424">{company?.name}</Text>
             </VStack>
           </HStack>
         ))}

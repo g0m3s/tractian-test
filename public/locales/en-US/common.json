@@ -1,7 +1,19 @@
 {
+  "day": "Day",
+  "days": "Days",
+  "hour": "Hour",
   "unit": "Unit",
+  "title": "Title",
+  "units": "Units",
+  "hours": "Hours",
   "users": "Users",
+  "status": "Status",
+  "company": "Company",
   "settings": "Settings",
   "show_more": "Show more",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "description": "Description",
+  "list_of_units": "List of units",
+  "last_insights": "Last insights",
+  "todo_tasks_state": "Status of tasks to do"
 }

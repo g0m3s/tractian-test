@@ -1,11 +1,20 @@
-import { IWorkOrder } from "~/types/api";
-import { useTranslation } from "next-i18next";
-import { Checkbox, Collapse, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Text,
+  Button,
+  HStack,
+  VStack,
+  Checkbox,
+  Collapse,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { assetsState } from "~/atoms/assets";
-import { useMemo, useState } from "react";
+import { IWorkOrder } from "~/types/api";
 import { usersState } from "~/atoms/users";
-import { Maximize2 } from "react-feather";
+import { useTranslation } from "next-i18next";
+import { Maximize2, Plus } from "react-feather";
+import { WorkOrdersDetailModal } from "./components";
+import { CreateWorkOrderModal } from "../CreateWorkOrderModal";
 
 interface WorkOrdersProps {
   items: IWorkOrder[];
@@ -16,10 +25,16 @@ export const WorkOrders: React.FC<WorkOrdersProps> = ({
   tasksStatus,
   items,
 }) => {
-  const [activeCardIds, setActiveCardIds] = useState<Array<number>>([]);
-  const [assets] = useRecoilState(assetsState);
-  const [users, setUsers] = useRecoilState(usersState);
+  const [users] = useRecoilState(usersState);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const {
+    isOpen: newOrderIsOpen,
+    onClose: onCloseOrder,
+    onOpen: onOpenOrder,
+  } = useDisclosure();
   const { t } = useTranslation(["modules/dashboard", "common"]);
+  const [selectedOrder, setSelectedOrder] = useState<IWorkOrder>();
+  const [activeCardIds, setActiveCardIds] = useState<Array<number>>([]);
 
   const generateInfos = () => {
     switch (tasksStatus) {
@@ -44,24 +59,23 @@ export const WorkOrders: React.FC<WorkOrdersProps> = ({
     }
   };
 
-  const handleActiveCardIds = (id: number) => {
-    if (!activeCardIds.find((item) => item === id)) {
-      setActiveCardIds((prev) => [...prev, id]);
-    }
-  };
-
   return (
-    <VStack w={"300px"}>
-      <Text color="#FFF">{generateInfos()?.title}</Text>
+    <VStack minW={"300px"} w={"300px"}>
+      <Text mb={4} fontSize={"xl"} fontWeight={"semibold"} color="#242424">
+        {generateInfos()?.title}
+      </Text>
       {items.map((task) => (
         <VStack
           p={5}
           w="100%"
-          borderRadius={5}
+          borderRadius={20}
           cursor={"pointer"}
           bg={generateInfos()?.bg}
-          boxShadow={"0px 0px 10px rgba(0,0,0,.1)"}
-          onClick={() => handleActiveCardIds(task.id)}
+          boxShadow={"0px 0px 10px rgba(0,0,0,.08)"}
+          onClick={() => {
+            setSelectedOrder(task);
+            onOpen();
+          }}
         >
           <Text fontSize={"xl"} fontWeight={"bold"}>
             {task.title}
@@ -100,12 +114,28 @@ export const WorkOrders: React.FC<WorkOrdersProps> = ({
               </Text>
             </VStack>
           </Collapse>
-          <HStack opacity={.5} hidden={!!activeCardIds.find((item) => item === task.id)}>
-            <Text fontSize={'sm'}>{t("common:show_more")}</Text>
+          <HStack
+            opacity={0.5}
+            hidden={!!activeCardIds.find((item) => item === task.id)}
+          >
+            <Text fontSize={"sm"}>{t("common:show_more")}</Text>
             <Maximize2 size={12} />
           </HStack>
         </VStack>
       ))}
+      <Button onClick={() => onOpenOrder()} w="100%">
+        <Plus />
+        <Text>{t("add_task")}</Text>
+      </Button>
+      <WorkOrdersDetailModal
+        isOpen={isOpen}
+        onClose={onClose}
+        workOrder={selectedOrder}
+      />
+      <CreateWorkOrderModal
+        onClose={onCloseOrder}
+        isOpen={newOrderIsOpen}
+      />
     </VStack>
   );
 };

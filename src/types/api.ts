@@ -25,14 +25,16 @@ export type AssetStatus =
   | "inAlert"
   | "unplannedStop";
 
+export interface HealthHistoryData {
+  status: AssetStatus;
+  timestamp: string;
+}
+
 export interface IAsset {
   assetId: number;
   assignedUserIds: number[];
   companyId: number;
-  healthHistory: Array<{
-    status: AssetStatus;
-    timestamp: string;
-  }>;
+  healthHistory: Array<HealthHistoryData>;
   healthscore: number;
   id: number;
   image: string;
@@ -45,7 +47,9 @@ export interface IAsset {
   name: string;
   sensors: string[];
   specifications: {
-    maxTemp: number;
+    rpm: number | null;
+    power: number | null;
+    maxTemp: number | null;
   };
   status: AssetStatus;
   unitId: number;

@@ -1,11 +1,37 @@
 {
   "toDo": "To do",
+  "health": "Saúde",
   "metrics": "Métricas",
   "completed": "Finalizadas",
   "inProgress": "Em andamento",
-  "health_score": "Saúde do ativo",
+  "add_task": "Adicionar tarefa",
   "more_details": "Mais detalhes",
+  "assets_list": "Lista de ativos",
+  "health_score": "Saúde do ativo",
   "workorders": "Ordens de serviço",
   "unit_assets": "Ativos da unidade",
-  "asset_detail": "Detalhes do ativo"
+  "asset_detail": "Detalhes do ativo",
+  "new_work_order": "Nova ordem de serviço",
+  "status": {
+    "inAlert": "Em alerta",
+    "inDowntime": "Inativo",
+    "unplannedStop": "Parado",
+    "inOperation": "Em operação"
+  },
+  "details": {
+    "rpm": "RPM",
+    "power": "Power",
+    "model": "Modelo",
+    "status": "Status",
+    "metrics": "Métricas",
+    "sensors": "Sensores",
+    "maxTemp": "Temp. máx",
+    "totalUptime": "Uptime total",
+    "assignedUsers": "Responsáveis",
+    "more_details": "Mais detalhes",
+    "lastUptimeAt": "Última atividade em",
+    "health_history": "Histórico de saúde",
+    "work_order_detail": "Ordem de serviço",
+    "totalCollectsUptime": "Tempo total de coleta"
+  }
 }

@@ -1,3 +1,7 @@
 export * from './WorkOrders'
+export * from './AssetsList'
+export * from './CarrouselCards'
+export * from './WorkOrdersChart'
 export * from './AssetStatusBadge'
 export * from './AssetDetailModal'
+export * from './CreateWorkOrderModal'
