@@ -59,7 +59,7 @@ export const LoginRoute: NextPage = () => {
         <Image mb={10} w={"150px"} alt="Tractian logo" src={tractionLogo.src} />
 
         <VStack gap={5} borderRadius={10} p={10} bg="#FFF">
-          <Text fontWeight={"semibold"}>
+          <Text color='#000' fontWeight={"semibold"}>
             Enter one of the emails provided by{" "}
             <Link
               target="_blank"
