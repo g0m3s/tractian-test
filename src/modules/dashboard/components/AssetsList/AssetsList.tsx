@@ -58,11 +58,13 @@ export const AssetsList: React.FC<AssetsListProps> = (props) => {
         {assets?.map((item) => (
           <VStack
             p={5}
-            w={"100%"}
             bg={bg}
+            w={"100%"}
             borderRadius={30}
+            cursor={'pointer'}
             border="1px solid rgba(255, 255, 255, .08)"
             boxShadow={"0px 0px 10px rgba(0,0,0,.08)"}
+            onClick={() => handleSelectedAsset(item.id)}
           >
             <Text
               color={color}
